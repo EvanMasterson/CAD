@@ -12,8 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :patient_name %>
+    <%= form.label :firstName %>
+    <%= form.text_field :firstName, id: :patient_firstName %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :lastName %>
+    <%= form.text_field :lastName, id: :patient_lastName %>
   </div>
 
   <div class="field">
