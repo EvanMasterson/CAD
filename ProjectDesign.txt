@@ -1,0 +1,6 @@
+Clinic can access Patient records
+Doctor can CRUD Patient records
+Doctor can request Clinic for scan on Patient records
+
+Search functionality per Patient condition/clinic/scan appointment/
+Show Patient record appointments per clinic per week
