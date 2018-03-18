@@ -9,6 +9,19 @@
   </head>
 
   <body>
+    <nav role='navigation'>
+      <div class='inner'>
+        <a href='#nav' class='nav-collapse' id='nav-collapse'>Menu</a>
+        <ul>
+          <%= render 'devise/menu/registration_items' %>
+          <%= render 'devise/menu/login_items' %>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
     <%= yield %>
+    </div>
   </body>
 </html>

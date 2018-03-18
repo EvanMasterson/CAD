@@ -1,3 +1,8 @@
+Doctor and clinic/admin login
+Doctor login provides CRUD for patient records
+Clinic/admin login provies Create functionality for patients, Doctors must assign patients later on
+Clinic has search functionality for patient records and show all details
+
 Clinic can access Patient records
 Doctor can CRUD Patient records
 Doctor can request Clinic for scan on Patient records
