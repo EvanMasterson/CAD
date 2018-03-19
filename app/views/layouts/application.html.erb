@@ -6,22 +6,14 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag 'favicon.ico' %>
   </head>
 
   <body>
-    <nav role='navigation'>
-      <div class='inner'>
-        <a href='#nav' class='nav-collapse' id='nav-collapse'>Menu</a>
-        <ul>
-          <%= render 'devise/menu/registration_items' %>
-          <%= render 'devise/menu/login_items' %>
-        </ul>
-      </div>
-    </nav>
-    <div class="container">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+    <%= render 'layouts/header' %>
+    
     <%= yield %>
-    </div>
+    
+    <%= render 'layouts/footer' %>
   </body>
 </html>
