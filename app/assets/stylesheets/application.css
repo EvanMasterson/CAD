@@ -13,3 +13,43 @@
  *= require_tree .
  *= require_self
  */
+ 
+#header {
+    background: url("header.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: auto;
+    overflow: auto;
+    color: #000000;
+}
+
+#header h1 {
+    color: #000000;
+    font-size: 50px;
+    padding: 1%;
+}
+ 
+ul {
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+}
+
+li a {
+    float: left;
+    display: block;
+    color: #000000;
+    text-align: center;
+    padding: 1% 1%;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #666666;
+}
+
+#footer {
+    color: #000000;
+    text-align: center;
+}
