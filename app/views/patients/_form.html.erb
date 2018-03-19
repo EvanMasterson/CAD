@@ -20,10 +20,10 @@
     <%= form.label :lastName %>
     <%= form.text_field :lastName, id: :patient_lastName %>
   </div>
-
+  
   <div class="field">
-    <%= form.label :age %>
-    <%= form.number_field :age, id: :patient_age %>
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :patient_email, :value => current_user.email, :readonly => true %>
   </div>
 
   <div class="field">

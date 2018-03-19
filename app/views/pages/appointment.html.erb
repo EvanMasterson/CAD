@@ -1,1 +1,5 @@
-<h1>Allow users make an appointment here</h1>
+<% if user_signed_in? %>
+    <%= render 'patients/form', patient: @patient %>
+<% else %>
+    <h1>Please sign in to make an appointment!</h1>
+<% end %>

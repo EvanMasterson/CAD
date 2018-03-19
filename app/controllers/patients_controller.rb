@@ -1,10 +1,16 @@
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :authenticate_admin!, only: [:index]
+  
+  def authenticate_admin!
+    redirect_to(root_path) unless current_user.admin
+  end
 
   # GET /patients
   # GET /patients.json
   def index
-    @patients = Patient.all
+      @patients = Patient.all
   end
 
   # GET /patients/1
@@ -14,7 +20,16 @@ class PatientsController < ApplicationController
 
   # GET /patients/new
   def new
-    @patient = Patient.new
+    if Patient.exists?(email: current_user.email)
+      @email = @current_user.email
+      @patient = Patient.find_by_email(@email)
+      respond_to do |format|
+        format.html { redirect_to @patient, notice: 'Patient record already exists for: ' + @email}
+        format.json { render :show, status: :created, location: @patient }
+      end
+    else
+      @patient = Patient.new
+    end
   end
 
   # GET /patients/1/edit
@@ -40,13 +55,22 @@ class PatientsController < ApplicationController
   # PATCH/PUT /patients/1
   # PATCH/PUT /patients/1.json
   def update
-    respond_to do |format|
-      if @patient.update(patient_params)
-        format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
-        format.json { render :show, status: :ok, location: @patient }
-      else
-        format.html { render :edit }
-        format.json { render json: @patient.errors, status: :unprocessable_entity }
+    @email = current_user.email
+    @patient = Patient.find(params[:id])
+    if @email == @patient.email
+      respond_to do |format|
+        if @patient.update(patient_params)
+          format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
+          format.json { render :show, status: :ok, location: @patient }
+        else
+          format.html { render :edit }
+          format.json { render json: @patient.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to @patient, notice: 'You do not have permissions to edit other patients!'}
+        format.json { render :show, status: :created, location: @patient }
       end
     end
   end
@@ -54,10 +78,19 @@ class PatientsController < ApplicationController
   # DELETE /patients/1
   # DELETE /patients/1.json
   def destroy
-    @patient.destroy
-    respond_to do |format|
-      format.html { redirect_to patients_url, notice: 'Patient was successfully destroyed.' }
-      format.json { head :no_content }
+    @email = current_user.email
+    @patient = Patient.find(params[:id])
+    if @email == @patient.email
+      @patient.destroy
+      respond_to do |format|
+        format.html { redirect_to patients_url, notice: 'Patient was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to @patient, notice: 'You do not have permissions to delete other patients!'}
+        format.json { render :show, status: :created, location: @patient }
+      end
     end
   end
 
@@ -69,6 +102,6 @@ class PatientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def patient_params
-      params.require(:patient).permit(:firstName, :lastName, :age, :dob, :address, :phone, :symptom)
+      params.require(:patient).permit(:firstName, :lastName, :email, :dob, :address, :phone, :symptom)
     end
 end

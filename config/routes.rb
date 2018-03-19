@@ -6,10 +6,11 @@ Rails.application.routes.draw do
   # resources :doctors do
   #   resources :patients
   # end
+  resources :patients
   
   root :to =>'pages#home'
   
-  get '/appointment', to: 'pages#appointment'
+  get '/appointment', to: 'patients#new'
   get '/patients', to: 'patients#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
