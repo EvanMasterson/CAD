@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # resources :doctors do
   #   resources :patients
   # end
-  resources :patients
+  resources :patients, :doctors
   
   root :to =>'pages#home'
   

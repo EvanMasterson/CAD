@@ -57,7 +57,7 @@ class PatientsController < ApplicationController
   def update
     @email = current_user.email
     @patient = Patient.find(params[:id])
-    if @email == @patient.email
+    if @email == @patient.email || current_user.admin
       respond_to do |format|
         if @patient.update(patient_params)
           format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
@@ -80,7 +80,7 @@ class PatientsController < ApplicationController
   def destroy
     @email = current_user.email
     @patient = Patient.find(params[:id])
-    if @email == @patient.email
+    if @email == @patient.email || current_user.admin
       @patient.destroy
       respond_to do |format|
         format.html { redirect_to patients_url, notice: 'Patient was successfully destroyed.' }
