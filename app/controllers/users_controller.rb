@@ -16,13 +16,15 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
+    # redirect_to(new_user_registration_path)
   end
 
   def edit
   end
   
   def create
-    @user = User.new(user_params.permit(:password))
+    # redirect_to(new_user_registration_path)
+    @user = User.new(create_user_params)
 
     respond_to do |format|
       if @user.save
@@ -37,7 +39,7 @@ class UsersController < ApplicationController
   
   def update
     respond_to do |format|
-        if @user.update(user_params)
+        if @user.update(update_user_params)
           format.html { redirect_to @user, notice: 'User was successfully updated.' }
           format.json { render :show, status: :ok, location: @user }
         else
@@ -62,7 +64,11 @@ class UsersController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
+    def create_user_params
+      params.require(:user).permit(:email, :password, :admin, :doctor, :patient)
+    end
+    
+    def update_user_params
       params.require(:user).permit(:email, :admin, :doctor, :patient)
     end
 end

@@ -13,12 +13,7 @@
 
   <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email, id: :user_email %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password, id: :user_password %>
+    <%= form.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
   
   <div class="field">
