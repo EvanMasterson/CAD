@@ -1,7 +1,12 @@
 class DoctorsController < ApplicationController
   before_action :set_doctor, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :authenticate_admin!
+  before_action :authenticate_doctor!, only: [:edit, :show, :update]
+  before_action :authenticate_admin!, only: [:index, :new, :create, :destroy]
+  
+  def authenticate_doctor!
+    redirect_to(root_path) unless current_user.doctor
+  end
   
   def authenticate_admin!
     redirect_to(root_path) unless current_user.admin
@@ -36,7 +41,10 @@ class DoctorsController < ApplicationController
   end
   
   def update
-    respond_to do |format|
+    @email = current_user.email
+    @doctor = Doctor.find(params[:id])
+    if @email == @doctor.email || current_user.admin
+      respond_to do |format|
         if @doctor.update(doctor_params)
           format.html { redirect_to @doctor, notice: 'Doctor was successfully updated.' }
           format.json { render :show, status: :ok, location: @doctor }
@@ -45,6 +53,12 @@ class DoctorsController < ApplicationController
           format.json { render json: @doctor.errors, status: :unprocessable_entity }
         end
       end
+    else
+      respond_to do |format|
+        format.html { redirect_to @patient, notice: 'You do not have permissions to edit other doctors!'}
+        format.json { render :show, status: :created, location: @patient }
+      end
+    end
   end
   
   def destroy
@@ -63,6 +77,6 @@ class DoctorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def doctor_params
-      params.require(:doctor).permit(:firstName, :lastName, :clinic, :specialisation)
+      params.require(:doctor).permit(:firstName, :lastName, :email, :clinic, :specialisation)
     end
 end

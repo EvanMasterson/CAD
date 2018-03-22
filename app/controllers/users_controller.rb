@@ -16,15 +16,18 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
-    # redirect_to(new_user_registration_path)
   end
 
   def edit
   end
   
   def create
-    # redirect_to(new_user_registration_path)
     @user = User.new(create_user_params)
+    if @user.doctor
+      puts 'trueeeeeeeeee'
+      @doctor = Doctor.new(email: create_user_params[:email])
+      @doctor.save
+    end
 
     respond_to do |format|
       if @user.save
@@ -65,7 +68,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def create_user_params
-      params.require(:user).permit(:email, :password, :admin, :doctor, :patient)
+      params.require(:user).permit(:email, :password, :password_confirmation, :admin, :doctor, :patient)
     end
     
     def update_user_params

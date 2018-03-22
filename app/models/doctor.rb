@@ -1,4 +1,4 @@
 class Doctor < ApplicationRecord
     has_many :patients
-    validates :firstName, :lastName, :clinic, :specialisation, presence: true
+    validates :email, presence: true, uniqueness: true
 end
