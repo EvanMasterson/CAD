@@ -1,6 +1,5 @@
 class DoctorsController < ApplicationController
   before_action :set_doctor, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
   before_action :authenticate_doctor!, only: [:edit, :show, :update]
   before_action :authenticate_admin!, only: [:index, :new, :create, :destroy]
   
