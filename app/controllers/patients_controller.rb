@@ -9,12 +9,21 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.json
   def index
+    if params[:doctor_id] && (current_user.doctor || current_user.admin)
+      @doctor = Doctor.find(params[:doctor_id])
+      @patients = @doctor.patients
+    else
       @patients = Patient.all
+    end
   end
 
   # GET /patients/1
   # GET /patients/1.json
   def show
+    if params[:doctor_id] && (current_user.doctor || current_user.admin)
+      @doctor = Doctor.find(params[:doctor_id])
+      @patient = @doctor.patients.find(params[:id])
+    end
   end
 
   # GET /patients/new

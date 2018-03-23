@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users, path: 'devise'
-  # resources :patients do
-  #   resources :doctors
-  # end
+  resources :patients, :users
   resources :doctors do
     resources :patients
   end
-  resources :patients, :users
   
   root :to =>'pages#home'
   

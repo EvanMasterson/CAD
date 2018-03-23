@@ -1,6 +1,6 @@
 class DoctorsController < ApplicationController
   before_action :set_doctor, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_doctor!, only: [:edit, :show, :update]
+  before_action :authenticate_doctor!, only: [:edit, :update]
   before_action :authenticate_admin!, only: [:index, :new, :create, :destroy]
   
   def authenticate_doctor!
@@ -16,6 +16,9 @@ class DoctorsController < ApplicationController
   end
 
   def show
+    if params[:doctor_id] && (current_user.doctor || current_user.admin)
+      @doctor = Doctor.find(params[:doctor_id])
+    end
   end
   
   def new
