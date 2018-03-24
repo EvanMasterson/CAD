@@ -101,6 +101,23 @@ class PatientsController < ApplicationController
       end
     end
   end
+  
+  def add_patient_to_doctor
+    @doctor = Doctor.find(params[:doctor_id])
+    @patient_id = params[:patient_id]
+    @patient = Patient.find(@patient_id)
+    @doctor.patients << @patient
+    
+    respond_to do |format|
+      if @patient.save
+        format.html { redirect_to doctor_patient_url(@doctor, @patient), notice: 'Patient successfully added to Doctor.' }
+        format.json { render :show, status: :created, location: @patient }
+      else
+        format.html { render :new }
+        format.json { render json: @patient.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

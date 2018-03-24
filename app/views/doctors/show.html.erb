@@ -60,4 +60,5 @@
 
 <%= link_to 'Edit', edit_doctor_path(@doctor) %> |
 <%= link_to 'Back', doctors_path %> |
-<%= link_to 'Show Patients', doctor_patients_path(@doctor) %>
+<%= link_to 'Show Patients', doctor_patients_path(@doctor) %> |
+<%= link_to 'Add Patients', patients_path(:id => @doctor.id) %>
