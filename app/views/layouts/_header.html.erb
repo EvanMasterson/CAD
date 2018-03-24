@@ -6,7 +6,7 @@
 
         <% if user_signed_in? %>
             <% if current_user.doctor %>
-                <li><%= link_to 'Manage Patients', doctors_path %></li>
+                <li><%= link_to 'Manage Patients', doctor_patients_path(:doctor_id => Doctor.find_by_email(current_user.email).id) %></li>
             <% elsif current_user.admin %>
                 <li><%= link_to 'Manage Patients', patients_path %></li>
                 <li><%= link_to 'Manage Doctors', doctors_path %></li>
