@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_admin!, only: [:index]
+  before_action :authenticate_admin!, only: [:index, :add_patient_to_doctor]
   
   def authenticate_admin!
     redirect_to(root_path) unless current_user.admin || current_user.doctor
@@ -88,7 +88,17 @@ class PatientsController < ApplicationController
   def destroy
     @email = current_user.email
     @patient = Patient.find(params[:id])
-    if @email == @patient.email || current_user.admin
+    
+    if params[:doctor_id] && (current_user.doctor || current_user.admin)
+      @doctor = Doctor.find(params[:doctor_id])
+      @patient = @doctor.patients.find(params[:id])
+      @doctor.patients.delete(@patient)
+      
+      respond_to do |format|
+        format.html { redirect_to @doctor, notice: 'Patient was successfully removed.' }
+        format.json { head :no_content }
+      end
+    elsif @email == @patient.email || current_user.admin
       @patient.destroy
       respond_to do |format|
         format.html { redirect_to patients_url, notice: 'Patient was successfully destroyed.' }
@@ -110,7 +120,7 @@ class PatientsController < ApplicationController
     
     respond_to do |format|
       if @patient.save
-        format.html { redirect_to doctor_patient_url(@doctor, @patient), notice: 'Patient successfully added to Doctor.' }
+        format.html { redirect_to @doctor, notice: 'Patient successfully added to Doctor.' }
         format.json { render :show, status: :created, location: @patient }
       else
         format.html { render :new }
