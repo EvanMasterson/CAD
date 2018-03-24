@@ -35,5 +35,31 @@
   <%= @patient.symptom %>
 </p>
 
+<h1>Doctor</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Clinic</th>
+      <th>Specialisation</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @doctor = @patient.doctor %>
+      <tr>
+        <td><%= @doctor.firstName %></td>
+        <td><%= @doctor.lastName %></td>
+        <td><%= @doctor.email %></td>
+        <td><%= @doctor.clinic %></td>
+        <td><%= @doctor.specialisation %></td>
+      </tr>
+  </tbody>
+</table>
+
 <%= link_to 'Edit', edit_patient_path(@patient) %> |
 <%= link_to 'Back', patients_path %>

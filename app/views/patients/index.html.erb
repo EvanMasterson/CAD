@@ -29,7 +29,9 @@
         <td><%= link_to 'Show', patient %></td>
         <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
         <td><%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= link_to 'Add Patient to Doctor', add_patient_path(:patient_id => patient, :doctor_id => params[:id]) %></td>
+        <% if params[:id] %>
+          <td><%= link_to 'Add Patient to Doctor', add_patient_path(:patient_id => patient, :doctor_id => params[:id]) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
