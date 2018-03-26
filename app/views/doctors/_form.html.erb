@@ -23,7 +23,11 @@
   
   <div class="field">
     <%= form.label :email %><br />
-    <%= form.email_field :email, id: :doctor_email, autofocus: true, autocomplete: "email" %>
+    <% if current_user.admin %>
+      <%= form.email_field :email, id: :doctor_email, autofocus: true, autocomplete: "email" %>
+    <% else %>
+      <%= form.email_field :email, id: :doctor_email, autofocus: true, autocomplete: "email", :readonly => true %>
+    <% end %>
   </div>
   
   <div class="field">

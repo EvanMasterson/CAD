@@ -23,7 +23,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(create_user_params)
     if @user.doctor
-      puts 'trueeeeeeeeee'
       @doctor = Doctor.new(email: create_user_params[:email])
       @doctor.save
     end
