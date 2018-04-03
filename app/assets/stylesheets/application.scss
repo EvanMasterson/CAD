@@ -10,42 +10,27 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
- 
-#header {
+@import "bootstrap";
+.navbar {
     background: url("header.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    margin: auto;
-    overflow: auto;
-    color: #000000;
+    height: auto;
+    min-height: 100px;
 }
 
-#header h1 {
-    color: #000000;
-    font-size: 50px;
-    padding: 1%;
-}
- 
-ul {
-    list-style-type: none;
-    padding: 0;
-    overflow: hidden;
+h2 {
+    
 }
 
 li a {
-    float: left;
-    display: block;
-    color: #000000;
-    text-align: center;
-    padding: 1% 1%;
-    text-decoration: none;
+    color: inherit !important;
+    text-decoration: none !important;
 }
 
-a:hover {
+li:hover {
     background-color: #666666;
 }
 

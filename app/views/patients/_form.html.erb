@@ -11,46 +11,49 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :firstName %>
-    <%= form.text_field :firstName, id: :patient_firstName %>
-  </div>
+  <div class="form-group col-4">
+    <div class="field">
+      <%= form.label :firstName %>
+      <%= form.text_field :firstName, id: :patient_firstName, class: ['form-control'] %>
+    </div>
+    
+    <div class="field">
+      <%= form.label :lastName %>
+      <%= form.text_field :lastName, id: :patient_lastName, class: ['form-control'] %>
+    </div>
+    
+    <div class="field">
+      <%= form.label :email %>
+      <% if current_user.doctor || current_user.admin %>
+        <%= form.text_field :email, id: :patient_email, class: ['form-control'] %>
+      <% else %>
+        <%= form.text_field :email, id: :patient_email, :value => current_user.email, :readonly => true, :class=>'form-control' %>
+      <% end %>
+    </div>
   
-  <div class="field">
-    <%= form.label :lastName %>
-    <%= form.text_field :lastName, id: :patient_lastName %>
-  </div>
+    <div class="field">
+      <%= form.label :dob %>
+      <%= form.date_select :dob, id: :patient_dob, class: ['form-control'] %>
+    </div>
   
-  <div class="field">
-    <%= form.label :email %>
-    <% if current_user.doctor || current_user.admin %>
-      <%= form.text_field :email, id: :patient_email %>
-    <% else %>
-      <%= form.text_field :email, id: :patient_email, :value => current_user.email, :readonly => true %>
-    <% end %>
-  </div>
+    <div class="field">
+      <%= form.label :address %>
+      <%= form.text_field :address, id: :patient_address, class: ['form-control'] %>
+    </div>
+  
+    <div class="field">
+      <%= form.label :phone %>
+      <%= form.number_field :phone, id: :patient_phone, class: ['form-control'] %>
+    </div>
+  
+    <div class="field">
+      <%= form.label :symptom %>
+      <%= form.text_field :symptom, id: :patient_symptom, class: ['form-control'] %>
+    </div>
 
-  <div class="field">
-    <%= form.label :dob %>
-    <%= form.date_select :dob, id: :patient_dob %>
-  </div>
-
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_field :address, id: :patient_address %>
-  </div>
-
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.number_field :phone, id: :patient_phone %>
-  </div>
-
-  <div class="field">
-    <%= form.label :symptom %>
-    <%= form.text_field :symptom, id: :patient_symptom %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+    </br>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
   </div>
 <% end %>

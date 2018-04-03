@@ -1,22 +1,50 @@
-<header id='header'>
-    <h1>HealthApp</h1>
-    <ul>
-        <li><%= link_to 'Home', root_path %></li>
-        <li><%= link_to 'Make Appointment', appointment_path %></li>
-
-        <% if user_signed_in? %>
-            <% if current_user.doctor %>
-                <li><%= link_to 'Manage Patients', doctor_patients_path(:doctor_id => Doctor.find_by_email(current_user.email).id) %></li>
-            <% elsif current_user.admin %>
-                <li><%= link_to 'Manage Patients', patients_path %></li>
-                <li><%= link_to 'Manage Doctors', doctors_path %></li>
-                <li><%= link_to 'Manage Users', users_path %></li>
-            <% end %>
-            <li><%= link_to 'Profile: ' + current_user.email, profile_path %></li>
-            <li><%= link_to 'Sign Out', destroy_user_session_path, :method =>:delete %></li>
-        <% else %>
-            <li><%= link_to 'Register', new_user_registration_path %></li>
-            <li><%= link_to 'Sign In', new_user_session_path %></li>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <h2>
+    <li class="nav-item nav-link">
+      <%= link_to 'HealthApp', root_path %>
+    </li>
+  </h2>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item nav-link">
+        <%= link_to 'Home', root_path %>
+      </li>
+      <li class="nav-item nav-link">
+        <%= link_to 'Make Appointment', appointment_path %>
+      </li>
+      <% if user_signed_in? %>
+        <% if current_user.doctor %>
+          <li class="nav-item nav-link">
+            <%= link_to 'Manage Patients', doctor_patients_path(:doctor_id => Doctor.find_by_email(current_user.email).id) %>
+          </li>
+        <% elsif current_user.admin %>
+          <li class="nav-item nav-link">
+            <%= link_to 'Manage Patients', patients_path %>
+          </li>
+          <li class="nav-item nav-link">
+            <%= link_to 'Manage Doctors', doctors_path %>
+          </li>
+          <li class="nav-item nav-link">
+            <%= link_to 'Manage Users', users_path %>
+          </li>
         <% end %>
-      </ul>
-</header>
+          <li class="nav-item nav-link">
+            <%= link_to 'Profile: ' + current_user.email, profile_path %>
+          </li>
+          <li class="nav-item nav-link">
+            <%= link_to 'Sign Out', destroy_user_session_path, :method =>:delete %>
+          </li>
+        <% else %>
+          <li class="nav-item nav-link">
+            <%= link_to 'Register', new_user_registration_path %>
+          </li>
+          <li class="nav-item nav-link">
+            <%= link_to 'Sign In', new_user_session_path %>
+          </li>
+        <% end %>
+    </ul>
+  </div>
+</nav>

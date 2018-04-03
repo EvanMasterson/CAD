@@ -5,6 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# Bootstrap gem for styling
+gem 'bootstrap', '~> 4.0.0'
+# Required for bootstrap
+gem 'jquery-rails'
 # Devise gem for authenticated login
 gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

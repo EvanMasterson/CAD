@@ -11,27 +11,30 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :admin %>
-    <%= form.select :admin, [['true', true], ['false', false]], id: :user_admin %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :doctor %>
-    <%= form.select :doctor, [['true', true], ['false', false]], id: :user_doctor %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :patient %>
-    <%= form.select :patient, [['true', true], ['false', false]], id: :user_patient %>
-  </div>
+  <div class="form-group col-4">
+    <div class="field">
+      <%= form.label :email %>
+      <%= form.email_field :email, autofocus: true, autocomplete: "email", class: ['form-control'] %>
+    </div>
+    
+    <div class="field">
+      <%= form.label :admin %>
+      <%= form.select :admin, [['true', true], ['false', false]], id: :user_admin, class: ['form-control'] %>
+    </div>
+    
+    <div class="field">
+      <%= form.label :doctor %>
+      <%= form.select :doctor, [['true', true], ['false', false]], id: :user_doctor, class: ['form-control'] %>
+    </div>
+    
+    <div class="field">
+      <%= form.label :patient %>
+      <%= form.select :patient, [['true', true], ['false', false]], id: :user_patient, class: ['form-control'] %>
+    </div>
 
-  <div class="actions">
-    <%= form.submit %>
+    </br>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
   </div>
 <% end %>
