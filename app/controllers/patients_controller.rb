@@ -1,5 +1,8 @@
+require 'observer'
 class PatientsController < ApplicationController
+  include Observable
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
+  before_action :observer, only: [:add_patient_to_doctor]
   before_action :authenticate_admin!, only: [:index, :add_patient_to_doctor]
   
   def authenticate_admin!
@@ -116,10 +119,12 @@ class PatientsController < ApplicationController
     @doctor = Doctor.find(params[:doctor_id])
     @patient_id = params[:patient_id]
     @patient = Patient.find(@patient_id)
-    @doctor.patients << @patient
     
     respond_to do |format|
       if @patient.save
+        @doctor.patients << @patient
+        changed
+        notify_observers(@doctor, @patient)
         format.html { redirect_to @doctor, notice: 'Patient successfully added to Doctor.' }
         format.json { render :show, status: :created, location: @patient }
       else
@@ -133,6 +138,10 @@ class PatientsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_patient
       @patient = Patient.find(params[:id])
+    end
+    
+    def observer
+      add_observer(Notifier.new)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
