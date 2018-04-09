@@ -3,9 +3,16 @@
   <thead>
     <tr>
       <th>Email</th>
-      <th>Admin</th>
-      <th>Doctor</th>
-      <th>Patient</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>DOB</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <% if current_user.admin %>
+        <th>Admin</th>
+        <th>Doctor</th>
+        <th>Patient</th>
+      <% end %>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -13,12 +20,21 @@
   <tbody>
     <tr>
       <td><%= @user.email %></td>
-      <td><%= @user.admin %></td>
-      <td><%= @user.doctor %></td>
-      <td><%= @user.patient %></td>
+      <td><%= @user.firstName %></td>
+      <td><%= @user.lastName %></td>
+      <td><%= @user.dob %></td>
+      <td><%= @user.address %></td>
+      <td><%= @user.phone %></td>
+      <% if current_user.admin %>
+        <td><%= @user.admin %></td>
+        <td><%= @user.doctor %></td>
+        <td><%= @user.patient %></td>
+      <% end %>
     </tr>
   </tbody>
 </table>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<% if current_user.admin %>
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'Back', users_path %>
+<% end %>

@@ -1,19 +1,27 @@
 <h1>Hi <%= current_user.email %></h1>
-<ul>
-    <% if current_user.patient %>
-        <li><%= link_to 'Edit Profile', edit_patient_path(id: @patient.id) %></li>
-    <% elsif current_user.doctor %>
-        <li><%= link_to 'Edit Profile', edit_doctor_path(id: @doctor.id) %></li>
-    <% end %>
-    <li><%= link_to 'Change your password', edit_user_registration_path %></li>
-</ul>
+<% if current_user.patient %>
+    <%= render :file => '/users/show', user: @user %>
+    <li><%= link_to 'Edit Profile', edit_user_path(id: current_user.id) %></li>
+<% elsif current_user.doctor %>
+    <%= render :file => '/users/show', user: @user %>
+    <li><%= link_to 'Edit Profile', edit_user_path(id: current_user.id) %></li>
+<% end %>
+<li><%= link_to 'Change your password', edit_user_registration_path %></li>
 
 <% if current_user.patient %>
     <h2>Current Appointment:</h2>
-    <%= render :file => '/patients/show', patient: @patient %>
+    <% if Patient.find_by_email(current_user.email) %>
+        <%= render :file => '/patients/show', patient: @patient %>
+    <% else %>
+        <p>No appointment scheduled.</p>
+    <% end %>
 <% elsif current_user.doctor %>
     <h2>Current Patients</h2>
-    <%= render :file => '/doctors/show', doctor: @doctor %>
+    <% if Doctor.find_by_email(current_user.email) %>
+        <%= render :file => '/doctors/show', doctor: @doctor %>
+    <% else %>
+        <p>No patients scheduled.</p>
+    <% end %>
 <% else %>
     <%= render :file => '/users/index', users: @users %>
     <%= render :file => '/doctors/index', doctors: @doctors %>

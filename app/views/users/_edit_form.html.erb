@@ -18,19 +18,46 @@
     </div>
     
     <div class="field">
-      <%= form.label :admin %>
-      <%= form.select :admin, [['true', true], ['false', false]], id: :user_admin, class: ['form-control'] %>
+      <%= form.label :firstName %>
+      <%= form.text_field :firstName, id: :patient_firstName, class: ['form-control'] %>
     </div>
     
     <div class="field">
-      <%= form.label :doctor %>
-      <%= form.select :doctor, [['true', true], ['false', false]], id: :user_doctor, class: ['form-control'] %>
+      <%= form.label :lastName %>
+      <%= form.text_field :lastName, id: :patient_lastName, class: ['form-control'] %>
     </div>
     
     <div class="field">
-      <%= form.label :patient %>
-      <%= form.select :patient, [['true', true], ['false', false]], id: :user_patient, class: ['form-control'] %>
+      <%= form.label :dob %>
+      <%= form.date_select :dob, id: :patient_dob, class: ['form-control'] %>
     </div>
+  
+    <div class="field">
+      <%= form.label :address %>
+      <%= form.text_field :address, id: :patient_address, class: ['form-control'] %>
+    </div>
+  
+    <div class="field">
+      <%= form.label :phone %>
+      <%= form.number_field :phone, id: :patient_phone, class: ['form-control'] %>
+    </div>
+    
+    <% if current_user.admin %>
+      <div class="field">
+        <%= form.label :admin %>
+        <%= form.select :admin, [['true', true], ['false', false]], id: :user_admin, class: ['form-control'] %>
+      </div>
+      
+      <div class="field">
+        <%= form.label :doctor %>
+        <%= form.select :doctor, [['true', true], ['false', false]], id: :user_doctor, class: ['form-control'] %>
+      </div>
+      
+      <div class="field">
+        <%= form.label :patient %>
+        <%= form.select :patient, [['true', true], ['false', false]], id: :user_patient, class: ['form-control'] %>
+      </div>
+    <% end %>
 
     </br>
     <div class="actions">

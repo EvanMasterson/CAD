@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, except: [:show, :edit, :update]
   
   def authenticate_admin!
     redirect_to(root_path) unless current_user.admin
@@ -39,8 +39,18 @@ class UsersController < ApplicationController
   end
   
   def update
+    @email = @user.email
+    puts @email
     respond_to do |format|
         if @user.update(update_user_params)
+          if Patient.find_by_email(@email)
+            @patient = Patient.find_by_email(@email)
+            @patient.update(email: update_user_params[:email])
+          elsif Doctor.find_by_email(@email)
+            @doctor = Doctor.find_by_email(@email)
+            @doctor.update(email: update_user_params[:email])
+          end
+          # elsif Doctor.find_by_email(@email)
           format.html { redirect_to @user, notice: 'User was successfully updated.' }
           format.json { render :show, status: :ok, location: @user }
         else
@@ -66,10 +76,10 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def create_user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :admin, :doctor, :patient)
+      params.require(:user).permit(:email, :password, :password_confirmation, :admin, :doctor, :patient, :dob, :address, :phone, :firstName, :lastName)
     end
     
     def update_user_params
-      params.require(:user).permit(:email, :admin, :doctor, :patient)
+      params.require(:user).permit(:email, :admin, :doctor, :patient, :dob, :address, :phone, :firstName, :lastName)
     end
 end

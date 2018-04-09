@@ -11,8 +11,10 @@ class PagesController < ApplicationController
     def profile
         if current_user.patient
             @patient = Patient.find_by_email(current_user.email)
+            @user = User.find_by_email(current_user.email)
         elsif current_user.doctor
             @doctor = Doctor.find_by_email(current_user.email)
+            @user = User.find_by_email(current_user.email)
         else
             @users = User.all
             @doctors = Doctor.all
