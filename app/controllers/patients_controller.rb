@@ -51,6 +51,7 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     @patient = Patient.new(patient_params)
+    set_category
 
     respond_to do |format|
       if @patient.save
@@ -68,6 +69,7 @@ class PatientsController < ApplicationController
   def update
     @email = current_user.email
     @patient = Patient.find(params[:id])
+    set_category
     if @email == @patient.email || current_user.admin
       respond_to do |format|
         if @patient.update(patient_params)
@@ -133,6 +135,10 @@ class PatientsController < ApplicationController
       end
     end
   end
+  
+  def set_category
+    @patient.category = AgeGroup.setAgeCategory(@patient.dob.to_s)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -146,6 +152,6 @@ class PatientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def patient_params
-      params.require(:patient).permit(:firstName, :lastName, :email, :dob, :address, :phone, :symptom)
+      params.require(:patient).permit(:firstName, :lastName, :email, :dob, :address, :phone, :symptom, :category)
     end
 end

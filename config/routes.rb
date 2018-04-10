@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  get 'search/index'
-
-  devise_for :users, path: 'devise'
+  devise_for :users, path: 'user'
   resources :patients, :users
   resources :doctors do
     resources :patients

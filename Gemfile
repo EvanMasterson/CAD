@@ -5,6 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# Custom gem built to catergorise patients into age group category given their date of birth
+# https://rubygems.org/gems/age_group
+gem 'age_group'
 # Bootstrap gem for styling
 gem 'bootstrap', '~> 4.0.0'
 # Required for bootstrap

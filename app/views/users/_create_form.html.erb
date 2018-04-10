@@ -42,7 +42,7 @@
     
     <div class="field">
       <%= form.label :dob %>
-      <%= form.date_select :dob, id: :patient_dob, class: ['form-control'] %>
+      <%= form.date_select :dob, :start_year=> 1900, :end_year=> Date.current.year, id: :patient_dob, class: ['form-control'] %>
     </div>
   
     <div class="field">
