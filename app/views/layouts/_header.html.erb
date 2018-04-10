@@ -37,14 +37,22 @@
           <li class="nav-item nav-link">
             <%= link_to 'Sign Out', destroy_user_session_path, :method =>:delete %>
           </li>
-        <% else %>
-          <li class="nav-item nav-link">
-            <%= link_to 'Register', new_user_registration_path %>
-          </li>
-          <li class="nav-item nav-link">
-            <%= link_to 'Sign In', new_user_session_path %>
-          </li>
-        <% end %>
+      <% else %>
+        <li class="nav-item nav-link">
+          <%= link_to 'Register', new_user_registration_path %>
+        </li>
+        <li class="nav-item nav-link">
+          <%= link_to 'Sign In', new_user_session_path %>
+        </li>
+      <% end %>
     </ul>
   </div>
+  <% if current_user.admin %>
+    <div class="text-right">
+      <%= form_tag(search_path, :method => "get", id: "search-form") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search" %>
+        <%= submit_tag "Search", :name => nil %>
+      <% end %>
+    </div>
+  <% end %>
 </nav>

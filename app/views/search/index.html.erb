@@ -1,0 +1,39 @@
+<% if @results.blank? %>
+  <h4>There are no records containing the term '<%= params[:search] %>'</h4>
+<% else %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>DOB</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Admin</th>
+        <th>Doctor</th>
+        <th>Patient</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @results.each do |result| %>
+        <tr>
+          <td><%= result.email %></td>
+          <td><%= result.firstName %></td>
+          <td><%= result.lastName %></td>
+          <td><%= result.dob %></td>
+          <td><%= result.address %></td>
+          <td><%= result.phone %></td>
+          <td><%= result.admin %></td>
+          <td><%= result.doctor %></td>
+          <td><%= result.patient %></td>
+          <td><%= link_to 'Show', result %></td>
+          <td><%= link_to 'Edit', edit_user_path(result) %></td>
+          <td><%= link_to 'Destroy', result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
