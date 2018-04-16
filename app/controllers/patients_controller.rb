@@ -2,7 +2,7 @@ require 'observer'
 class PatientsController < ApplicationController
   include Observable
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
-  before_action :observer, only: [:add_patient_to_doctor]
+  before_action :observer, only: [:create, :add_patient_to_doctor]
   before_action :authenticate_admin!, only: [:index, :add_patient_to_doctor]
   
   def authenticate_admin!
@@ -51,15 +51,22 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     @patient = Patient.new(patient_params)
-    set_category
-
-    respond_to do |format|
-      if @patient.save
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
-        format.json { render :show, status: :created, location: @patient }
-      else
-        format.html { render :new }
-        format.json { render json: @patient.errors, status: :unprocessable_entity }
+    if !User.exists?(email: patient_params[:email])
+      respond_to do |format|
+        format.html { redirect_to new_user_path, notice: 'Patient record cannot be created without associated User!' }
+      end
+    else
+      set_category
+      respond_to do |format|
+        if @patient.save
+          changed
+          notify_observers(nil, @patient)
+          format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
+          format.json { render :show, status: :created, location: @patient }
+        else
+          format.html { render :new }
+          format.json { render json: @patient.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

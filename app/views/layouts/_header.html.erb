@@ -47,12 +47,14 @@
       <% end %>
     </ul>
   </div>
-  <% if current_user.admin %>
-    <div class="text-right">
-      <%= form_tag(search_path, :method => "get", id: "search-form") do %>
-        <%= text_field_tag :search, params[:search], placeholder: "Search" %>
-        <%= submit_tag "Search", :name => nil %>
-      <% end %>
-    </div>
+  <% if user_signed_in? %>
+    <% if current_user.admin %>
+      <div class="text-right">
+        <%= form_tag(search_path, :method => "get", id: "search-form") do %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search" %>
+          <%= submit_tag "Search", :name => nil %>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 </nav>

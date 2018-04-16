@@ -3,7 +3,7 @@
   <div class="clinics">
     <div class="d-block">
       <h2><%= clinic.name %></h2>
-      <%= image_tag clinic.image, :class=>"image" %>
+      <%= link_to (image_tag clinic.image, :class=>"image"), clinics_path %>
       <p>Specialisation: <%= clinic.specialisation %></p>
       <p>Location: <%= clinic.location %></p>
     </div>
