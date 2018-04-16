@@ -1,11 +1,6 @@
 class DoctorsController < ApplicationController
   before_action :set_doctor, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_doctor!, only: [:edit, :update]
   before_action :authenticate_admin!, only: [:index, :new, :create, :destroy]
-  
-  def authenticate_doctor!
-    redirect_to(root_path) unless current_user.doctor
-  end
   
   def authenticate_admin!
     redirect_to(root_path) unless current_user.admin
@@ -23,9 +18,16 @@ class DoctorsController < ApplicationController
   
   def new
     @doctor = Doctor.new
+    @clinics = Clinic.all
+    create_list(@clinics)
   end
 
   def edit
+    @doctor = Doctor.find(params[:id])
+    if @doctor.email == current_user.email || current_user.admin
+      @clinics = Clinic.all
+      create_list(@clinics)
+    end
   end
   
   def create
@@ -75,6 +77,13 @@ class DoctorsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_doctor
       @doctor = Doctor.find(params[:id])
+    end
+    
+    def create_list(clinics)
+      @options = []
+      clinics.each do |clinic|
+        @options.push(clinic.name)
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

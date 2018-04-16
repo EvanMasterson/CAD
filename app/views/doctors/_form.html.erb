@@ -32,7 +32,7 @@
     
     <div class="field">
       <%= form.label :clinic %>
-      <%= form.text_field :clinic, id: :doctor_clinic, class: ['form-control'] %>
+      <%= form.select :clinic, @options.map { |value| [ value, value ] }, id: :doctor_clinic, class: ['form-control'] %>
     </div>
   
     <div class="field">
