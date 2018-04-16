@@ -12,8 +12,11 @@
  *
  */
 @import "bootstrap";
+body {
+    background: linear-gradient(to bottom right, lightblue, white);
+}
+
 .navbar {
-    background: linear-gradient(to bottom right, cyan, yellow);
     height: auto;
     min-height: 100px;
 }
@@ -23,6 +26,10 @@ li a {
     text-decoration: none !important;
 }
 
+#header {
+    background: none !important;
+}
+
 #footer {
     color: #000000;
     text-align: center;
@@ -30,7 +37,6 @@ li a {
     min-height: 100px;
     padding: 1.75%;
     font-weight: bold;
-    background: linear-gradient(to top right, cyan, yellow);
 }
 
 .clinics {
@@ -55,6 +61,11 @@ li a {
     width: 50%; 
     margin: auto;
     display: block;
+}
+
+.search {
+    margin: auto;
+    float: right;
 }
 
 /*CSS for Devise messages*/
