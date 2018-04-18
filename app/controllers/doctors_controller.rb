@@ -45,11 +45,17 @@ class DoctorsController < ApplicationController
   end
   
   def update
-    @email = current_user.email
+    @email = @doctor.email
     @doctor = Doctor.find(params[:id])
+    @doc_email = @doctor.email
     if @email == @doctor.email || current_user.admin
       respond_to do |format|
         if @doctor.update(doctor_params)
+          if User.find_by_email(@doc_email)
+            @user = User.find_by_email(@doc_email)
+            @user.skip_reconfirmation!
+            @user.update(email: doctor_params[:email])
+          end
           format.html { redirect_to @doctor, notice: 'Doctor was successfully updated.' }
           format.json { render :show, status: :ok, location: @doctor }
         else

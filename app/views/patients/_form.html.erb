@@ -27,7 +27,7 @@
       <% if current_user.doctor || current_user.admin %>
         <%= form.text_field :email, id: :patient_email, class: ['form-control'] %>
       <% else %>
-        <%= form.text_field :email, id: :patient_email, :value => current_user.email, :readonly => true, class: ['form-control'] %>
+        <%= form.text_field :email, id: :patient_email, :value => current_user.email, class: ['form-control'] %>
       <% end %>
     </div>
   

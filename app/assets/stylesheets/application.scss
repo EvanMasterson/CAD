@@ -12,8 +12,10 @@
  *
  */
 @import "bootstrap";
-body {
+html, body {
     background: linear-gradient(to bottom right, lightblue, white);
+    background-repeat: no-repeat;
+    background-size: auto;
 }
 
 .navbar {
@@ -67,6 +69,19 @@ li a {
     margin: auto;
     float: right;
 }
+
+// .table {
+//     border: 1px solid rgba(0, 0, 0, 0.5);
+//     margin-top:20px;
+// }
+
+// .table > thead > tr > th {
+//     border: 1px solid rgba(0, 0, 0, 0.5);
+// }
+
+// .table > tbody > tr > td {
+//     border: 1px solid rgba(0, 0, 0, 0.5);
+// }
 
 /*CSS for Devise messages*/
 .alert-error {

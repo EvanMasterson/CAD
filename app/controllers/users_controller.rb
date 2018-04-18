@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   
   def update
     @email = @user.email
-    puts @email
+    @user.skip_reconfirmation!
     respond_to do |format|
         if @user.update(update_user_params)
           if Patient.find_by_email(@email)
@@ -50,7 +50,6 @@ class UsersController < ApplicationController
             @doctor = Doctor.find_by_email(@email)
             @doctor.update(email: update_user_params[:email])
           end
-          # elsif Doctor.find_by_email(@email)
           format.html { redirect_to @user, notice: 'User was successfully updated.' }
           format.json { render :show, status: :ok, location: @user }
         else

@@ -76,10 +76,16 @@ class PatientsController < ApplicationController
   def update
     @email = current_user.email
     @patient = Patient.find(params[:id])
+    @patient_email = @patient.email
     set_category
     if @email == @patient.email || current_user.admin
       respond_to do |format|
         if @patient.update(patient_params)
+          if User.find_by_email(@patient_email)
+            @user = User.find_by_email(@patient_email)
+            @user.skip_reconfirmation!
+            @user.update(email: patient_params[:email])
+          end
           format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
           format.json { render :show, status: :ok, location: @patient }
         else
