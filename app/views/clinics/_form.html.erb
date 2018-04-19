@@ -11,27 +11,29 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :clinic_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :location %>
-    <%= form.text_field :location, id: :clinic_location %>
-  </div>
-
-  <div class="field">
-    <%= form.label :specialisation %>
-    <%= form.text_field :specialisation, id: :clinic_specialisation %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_field :description, id: :clinic_description %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name, id: :clinic_name %>
+    </div>
+  
+    <div class="field">
+      <%= form.label :location %>
+      <%= form.text_field :location, id: :clinic_location %>
+    </div>
+  
+    <div class="field">
+      <%= form.label :specialisation %>
+      <%= form.text_field :specialisation, id: :clinic_specialisation %>
+    </div>
+  
+    <div class="field">
+      <%= form.label :description %>
+      <%= form.text_field :description, id: :clinic_description %>
+    </div>
+  
+    <div class="actions">
+      <%= form.submit %>
+    </div>
   </div>
 <% end %>

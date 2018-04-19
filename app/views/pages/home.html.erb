@@ -1,4 +1,4 @@
-<h1 style="text-align: center">Clinics</h1>
+<h1 class="headings">Clinics</h1>
 <% @clinics.each do |clinic| %>
   <div class="clinics">
     <div class="d-block">
@@ -6,6 +6,7 @@
       <%= link_to (image_tag clinic.image, :class=>"image"), clinics_path %>
       <p>Specialisation: <%= clinic.specialisation %></p>
       <p>Location: <%= clinic.location %></p>
+      <p>Opening: <%= clinic.description %></p>
     </div>
   </div>
 <% end %>

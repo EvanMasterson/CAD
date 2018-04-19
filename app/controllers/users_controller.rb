@@ -40,7 +40,9 @@ class UsersController < ApplicationController
   
   def update
     @email = @user.email
-    @user.skip_reconfirmation!
+    if !current_user.admin
+      @user.skip_reconfirmation!
+    end
     respond_to do |format|
         if @user.update(update_user_params)
           if Patient.find_by_email(@email)
