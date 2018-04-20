@@ -3,7 +3,10 @@ class UsersController < ApplicationController
   before_action :authenticate_admin!, except: [:show, :edit, :update]
   
   def authenticate_admin!
-    redirect_to(root_path) unless current_user.admin
+    unless current_user.admin
+      flash[:notice] = "You do not have sufficient permissions"
+      redirect_to root_path
+    end
   end
   
   def index
@@ -72,7 +75,12 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      if !User.exists?(params[:id])
+        flash[:notice] = "User does not exist"
+        redirect_to users_path
+      else
+        @user = User.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

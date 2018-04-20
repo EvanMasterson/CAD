@@ -3,7 +3,10 @@ class ClinicsController < ApplicationController
   before_action :authenticate_admin!
   
   def authenticate_admin!
-    redirect_to(root_path) unless current_user.admin
+    unless current_user.admin
+      flash[:notice] = "You do not have sufficient permissions"
+      redirect_to root_path
+    end
   end
 
   # GET /clinics
@@ -69,7 +72,12 @@ class ClinicsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_clinic
-      @clinic = Clinic.find(params[:id])
+      if !Clinic.exists?(params[:id])
+        flash[:notice] = "Clinic does not exist"
+        redirect_to clinics_path
+      else
+        @clinic = Clinic.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

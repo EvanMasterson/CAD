@@ -6,7 +6,10 @@ class PatientsController < ApplicationController
   before_action :authenticate_admin!, only: [:index, :add_patient_to_doctor]
   
   def authenticate_admin!
-    redirect_to(root_path) unless current_user.admin || current_user.doctor
+    unless current_user.admin || current_user.doctor
+      flash[:notice] = "You do not have sufficient permissions"
+      redirect_to root_path
+    end
   end
 
   # GET /patients
@@ -156,7 +159,12 @@ class PatientsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_patient
-      @patient = Patient.find(params[:id])
+      if !Patient.exists?(params[:id])
+        flash[:notice] = "Patient does not exist"
+        redirect_to patients_path
+      else
+        @patient = Patient.find(params[:id])
+      end
     end
     
     def observer
