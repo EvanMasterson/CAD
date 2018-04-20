@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   get '/profile', to: 'pages#profile'
   get '/add_patient', to: 'patients#add_patient_to_doctor'
   get '/search', to: 'search#index'
+  get '*path' => redirect('/')
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
