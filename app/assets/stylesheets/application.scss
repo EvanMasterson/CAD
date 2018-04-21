@@ -79,6 +79,11 @@ li a {
     text-align: center;
 }
 
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
 /*CSS for Devise messages*/
 .alert-error {
     background-color: #f2dede;

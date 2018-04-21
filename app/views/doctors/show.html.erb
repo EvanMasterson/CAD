@@ -47,6 +47,7 @@
         <td><%= patient.address %></td>
         <td><%= patient.phone %></td>
         <td><%= patient.symptom %></td>
+        <td><%= patient.category %></td>
         <td><%= link_to 'Show', patient %></td>
         <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
         <td><%= link_to 'Remove', doctor_patient_url(:id => patient, :doctor_id => @doctor.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -54,7 +55,9 @@
     <% end %>
   </tbody>
 </table>
-
+<div class="col-md-5 col-centered">
+  <%= pie_chart @doctor.patients.group(:category).count, donut: true %>
+</div>
 <%= link_to 'Edit', edit_doctor_path(@doctor) %> |
 <%= link_to 'Back', doctors_path %> |
 <%= link_to 'Show Patients', doctor_patients_path(@doctor) %> |
