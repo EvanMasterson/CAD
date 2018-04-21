@@ -26,9 +26,16 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show
-    if params[:doctor_id] && (current_user.doctor || current_user.admin)
-      @doctor = Doctor.find(params[:doctor_id])
-      @patient = @doctor.patients.find(params[:id])
+    unless current_user.admin
+      if current_user.email != @patient.email
+        flash[:notice] = "You do not have sufficient permissions"
+        redirect_to root_path
+      end
+    else
+      if params[:doctor_id] && (current_user.doctor || current_user.admin)
+        @doctor = Doctor.find(params[:doctor_id])
+        @patient = @doctor.patients.find(params[:id])
+      end
     end
   end
 
@@ -48,6 +55,12 @@ class PatientsController < ApplicationController
 
   # GET /patients/1/edit
   def edit
+    unless current_user.admin
+      if current_user.email != @patient.email
+        flash[:notice] = "You do not have sufficient permissions"
+        redirect_to root_path
+      end
+    end
   end
 
   # POST /patients

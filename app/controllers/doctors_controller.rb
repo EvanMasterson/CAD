@@ -14,8 +14,15 @@ class DoctorsController < ApplicationController
   end
 
   def show
-    if params[:doctor_id] && (current_user.doctor || current_user.admin)
-      @doctor = Doctor.find(params[:doctor_id])
+    unless current_user.admin
+      if current_user.email != @doctor.email
+        flash[:notice] = "You do not have sufficient permissions"
+        redirect_to root_path
+      end
+    else
+      if params[:doctor_id] && (current_user.doctor || current_user.admin)
+        @doctor = Doctor.find(params[:doctor_id])
+      end
     end
   end
   
@@ -26,10 +33,17 @@ class DoctorsController < ApplicationController
   end
 
   def edit
-    @doctor = Doctor.find(params[:id])
-    if @doctor.email == current_user.email || current_user.admin
-      @clinics = Clinic.all
-      create_list(@clinics)
+    unless current_user.admin
+      if current_user.email != @doctor.email
+        flash[:notice] = "You do not have sufficient permissions"
+        redirect_to root_path
+      end
+    else
+      @doctor = Doctor.find(params[:id])
+      if @doctor.email == current_user.email || current_user.admin
+        @clinics = Clinic.all
+        create_list(@clinics)
+      end
     end
   end
   
